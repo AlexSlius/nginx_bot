@@ -1,0 +1,17 @@
+
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "3004:3004"
+    restart: always
+    volumes:
+      - ./config/:/etc/nginx/conf.d/:ro
+      - /home/project/backend/uploads/:/var/www/uploads/:ro
+    networks:
+      - nginx_default
+
+networks:
+  nginx_default:
+    external: true

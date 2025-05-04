@@ -1,0 +1,15 @@
+
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    restart: always
+    volumes:
+      - ./config/:/etc/nginx/conf.d/:ro
+    networks:
+      - nginx_default
+
+networks:
+  nginx_default:
+    external: true
