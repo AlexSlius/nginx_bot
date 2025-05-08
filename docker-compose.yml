@@ -4,14 +4,28 @@ services:
     image: nginx:alpine
     ports:
       - "80:80"
-      - "3004:3004"
+      #- "3004:3004"
+      - "443:443"
     restart: always
     volumes:
       - ./config/:/etc/nginx/conf.d/:ro
       - /home/project/backend/uploads/:/var/www/uploads/:ro
+      - www:/var/www/certbot:ro
+      - certs:/etc/nginx/ssl:ro
     networks:
       - nginx_default
+
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - www:/var/www/certbot/:rw
+      - certs:/etc/letsencrypt/:rw
+
 
 networks:
   nginx_default:
     external: true
+
+volumes:
+  certs:
+  www:
